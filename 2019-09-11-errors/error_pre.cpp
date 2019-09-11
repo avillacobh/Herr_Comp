@@ -12,7 +12,7 @@ int main (void)
       eps /= 2;
       one = 1.0 +eps;
       std::printf("%8d %24.16e %24.16e\n" , i, one, eps);
-      // if(one <=1) break;
+      if(one <=1) break;
     }
   
   return 0;
