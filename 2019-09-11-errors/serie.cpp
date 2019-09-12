@@ -21,7 +21,7 @@ int main (void)
 	sum += term;
       }
 
-    fout << x << "\t" << term << "\t" << sum << "\t" << std::sin(x) << "\n";
+    fout << x << "\t" << sum << "\t" << std::sin(x) << "\n";
   }
   fout.close();
   
