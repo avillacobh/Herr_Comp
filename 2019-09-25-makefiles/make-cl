@@ -1,0 +1,3 @@
+.PHONY: Clean
+clean:
+	rm -f *~ *# a.out *.x *.o
