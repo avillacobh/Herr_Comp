@@ -18,7 +18,7 @@ int main (void)
       x3 = (-2*c)/(b + det);
       x4 = (-2*c)/(b - det);
 
-      std::printf("%10d %10.6f %10.6f  %10.6f %10.6f\n",i, x1, x2, x3, x4);
+      std::printf("%10d %10.6f %10.6f %10.6f %10.6f\n",i, x1, x2, x3, x4);
     }
   return 0;
 }
