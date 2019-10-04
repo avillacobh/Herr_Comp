@@ -8,7 +8,7 @@
 
 int main (void)
 {
-  int nmax =10000;
+  int nmax =5000;
   for (int i = 1; i<= nmax; i++)
     {
       float s3 = sum3(i);
