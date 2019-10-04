@@ -4,7 +4,7 @@
  
 int main()
 {
-  const int NSAMPLES = 1e6;
+  const int NSAMPLES = 1e8;
   int seed = 1;
   
   const double xmin =0.0;

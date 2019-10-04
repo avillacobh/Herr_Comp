@@ -3,10 +3,10 @@
 
 int main (void)
 {
-  const double xmin = -5.0;
+  const double xmin = 1.0;
   const double xmax =20.0;
   const double dx = 0.0001;
-  const double v = 1.0;
+  const double v = 5.0;
   
   const int NSTEPS = (xmax - xmin)/dx;
   
