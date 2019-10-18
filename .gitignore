@@ -4,3 +4,5 @@
 *#
 *datos.txt
 *.o
+gmon.out
+perf.data
