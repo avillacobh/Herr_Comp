@@ -1,0 +1,19 @@
+Time with fast index inside: 2.069664
+Time with fast index outside: 0.315134
+Time with fast index outside: 0.335879
+
+ Performance counter stats for './a.out':
+
+       2885.986820      task-clock (msec)         #    0.999 CPUs utilized          
+                22      context-switches          #    0.008 K/sec                  
+                 1      cpu-migrations            #    0.000 K/sec                  
+           132,662      page-faults               #    0.046 M/sec                  
+     8,096,412,014      cycles                    #    2.805 GHz                    
+   <not supported>      stalled-cycles-frontend  
+   <not supported>      stalled-cycles-backend   
+     8,733,518,990      instructions              #    1.08  insns per cycle        
+       481,185,222      branches                  #  166.732 M/sec                  
+           921,547      branch-misses             #    0.19% of all branches        
+
+       2.887806855 seconds time elapsed
+
