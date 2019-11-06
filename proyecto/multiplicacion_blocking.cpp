@@ -1,5 +1,8 @@
 #include <iostream>
 #include <cstdio>
+#include <fstream>
+#include <cmath>
+#include <string>
 #include <cstdlib>
 #include "papi.h" 
 
@@ -9,6 +12,12 @@ int mult (const double *A, const double *B, double *C, int N, int Nb);
 
 int main ()
 {
+  std::string datos1;
+  std::string datos2;
+  
+  std::cin >> datos1;
+  std::cin >> datos2;
+  
   const int N = 8192;
   
   // Declare as pointers and ask for memory to use the heap
@@ -30,6 +39,8 @@ int main ()
   long long iflpops;
   int retval;
 
+  std::ofstream fout (datos1);
+  
   for(int Nb = 1; Nb <= N; Nb*=2)
     {
       // start PAPI counters
@@ -50,12 +61,17 @@ int main ()
         }
       
 
-      printf("Real_time: %f Proc_time: %f Total flpops: %lld MFLOPS: %f\n",
-  	 real_time, proc_time,flpops,mflops);
+      fout << Nb << "\t" << real_time << "\t" << proc_time << "\n";
       
       // Do something here, like computing the average of the resulting matrix, to avoid the optimizer deleting the code
-      printf("%e.15\n", C[0]);
+      int tmp = 0;
+      for (int i = 0 ; i < N*N; i++){
+	tmp += C[i];
+      }
+      printf("%d\n", tmp);
     }
+
+  fout.close();
   
   delete [] A;
   delete [] B;
@@ -64,7 +80,12 @@ int main ()
   //variando el tamaño
 
   int nb = 32; //bloque que óptimo
+
+  std::ofstream fout2 (datos2);
+  
   for(int n = nb; n <= 2*N; n*=2){
+    double *A = new double [n*n], *B = new double [n*n], *C = new double[n*n];
+    
     // initialize matrices
     for (int ii =0; ii < n; ++ii) {
       for (int jj =0; jj < n; ++jj) {
@@ -91,11 +112,14 @@ int main ()
       }
     
     
-    printf("Real_time: %f Proc_time: %f Total flpops: %lld MFLOPS: %f\n",
-	   real_time, proc_time,flpops,mflops);
+    fout2 << n << "\t" << real_time << "\t" << proc_time << "\n";
     
     // Do something here, like computing the average of the resulting matrix, to avoid the optimizer deleting the code
-    printf("%e.15\n", C[0]);
+    int tmp = 0;
+    for (int i = 0 ; i < n*n; i++){
+      tmp += C[i];
+    }
+    printf("%d\n", tmp);
     
     delete [] A;
     delete [] B;
