@@ -1,5 +1,8 @@
 #include <iostream>
 #include <cstdio>
+#include <fstream>
+#include <cmath>
+#include <string>
 #include <cstdlib>
 #include "papi.h"
 
@@ -9,6 +12,12 @@ int trans (const double * M, double *MT,int N, int Nb);
 
 int main ()
 {
+  std::string datos1;
+  std::string datos2;
+
+  std::cin >> datos1;
+  std::cin >> datos2;
+  
   const int N = 8192;
   // Declare as pointers and ask for memory to use the heap
   double *A = new double [N*N], *AT = new double [N*N];
@@ -28,6 +37,8 @@ int main ()
   long long iflpops;
   int retval;
 
+  std::ofstream fout (datos1);
+  
   for(int Nb = 1; Nb <= N; Nb*=2)
     {
       // start PAPI counters
@@ -40,21 +51,26 @@ int main ()
         }
 
       trans(A, AT, N, Nb);
-
+      
       if((retval=PAPI_flops( &real_time, &proc_time, &flpops, &mflops))<PAPI_OK)
         {
-        printf("retval: %d\n", retval);
-        exit(1);
+	  printf("retval: %d\n", retval);
+	  exit(1);
         }
       
-
-      printf("Real_time: %f Proc_time: %f Total flpops: %lld MFLOPS: %f\n",
-  	 real_time, proc_time,flpops,mflops);
+      fout << Nb << "\t" << real_time << "\t" << proc_time << "\n";
+      
       
       // Do something here, like computing the average of the resulting matrix, to avoid the optimizer deleting the code
-      printf("%e.15\n", AT[0]);
+      int tmp = 0;
+      for (int i = 0 ; i < N*N; i++){
+	tmp += AT[i];
+      }
+      printf("%d\n", tmp);
     }
-  
+
+  fout.close();
+    
   delete [] A;
   delete [] AT;
 
@@ -63,7 +79,11 @@ int main ()
   // variando el tamaño
   int nb=32; //bloque óptimo
 
+  std::ofstream fout2 (datos2);
+  
   for(int n = nb; n <= 2*N; n*=2){
+
+    double *A = new double [n*n], *AT = new double [n*n];
     // initialize matrices
     for (int ii =0; ii < n; ++ii) {
       for (int jj =0; jj < n; ++jj) {
@@ -71,7 +91,7 @@ int main ()
 	AT[ii*n + jj] = 0.0;
       }
     }
-
+    
     // start PAPI counters
     if((retval=PAPI_flops(&ireal_time,&iproc_time,&iflpops,&imflops)) < PAPI_OK)
       {
@@ -90,15 +110,20 @@ int main ()
       }
     
     
-    printf("Real_time: %f Proc_time: %f Total flpops: %lld MFLOPS: %f\n",
-	   real_time, proc_time,flpops,mflops);
+    fout2 << n << "\t" << real_time << "\t" << proc_time << "\n";
     
     // Do something here, like computing the average of the resulting matrix, to avoid the optimizer deleting the code
-    printf("%e.15\n", AT[0]); 
+    int tmp = 0;
+    for (int i = 0 ; i < n*n; i++){
+      tmp += AT[i];
+    }
+    printf("%d\n", tmp);
     
     delete [] A;
     delete [] AT;
   }
+
+  fout2.close();
   
   return 0;
 }
