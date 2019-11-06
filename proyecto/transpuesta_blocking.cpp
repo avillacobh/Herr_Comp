@@ -65,10 +65,10 @@ int main ()
 
   for(int n = nb; n <= 2*N; n*=2){
     // initialize matrices
-    for (int ii =0; ii < N; ++ii) {
-      for (int jj =0; jj < N; ++jj) {
-	A[ii*N + jj] = ii + jj + 1; 
-	AT[ii*N + jj] = 0.0;
+    for (int ii =0; ii < n; ++ii) {
+      for (int jj =0; jj < n; ++jj) {
+	A[ii*n + jj] = ii + jj + 1; 
+	AT[ii*n + jj] = 0.0;
       }
     }
 
